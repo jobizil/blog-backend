@@ -1,11 +1,11 @@
-const { Router } = require("express");
+const { Router } = require('express')
 
 // ANCHOR Export to index,.js api file
 
-const { getUser } = require("../../controllers/users.controller");
+const { registerUser } = require('../../controllers/users/registerUser')
 
-const router = Router();
+const router = Router()
 
-router.route("/users").get(getUser);
+router.route('/users').post(registerUser)
 
-module.exports = router;
+module.exports = router
