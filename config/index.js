@@ -7,7 +7,7 @@ module.exports = {
 	env: process.env.NODE_ENV,
 	origin: process.env.ORIGIN,
 	database_uri: process.env.DB_URI,
-
+	database_uri_test: process.env.DB_URI_TEST,
 	auth: {
 		jwt_secret: process.env.JWT_SECRET,
 		access_token_life: process.env.ACCESS_TOKEN_LIFE,

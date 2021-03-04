@@ -7,7 +7,7 @@ chai.should()
 
 describe('Test Database Connection', () => {
 	let connectionClient = undefined
-	it('Should be connected', async () => {
+	it('Should connect to database', async () => {
 		connectionClient = await connectToDatabase()
 	})
 })

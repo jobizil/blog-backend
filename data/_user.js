@@ -1,5 +1,3 @@
-// const faker = require('faker')
-
 const fakeUser = {
 	registerUser: {
 		username: 'johndoe',
@@ -10,6 +8,14 @@ const fakeUser = {
 		username: 'User',
 		email: 'user@example.com',
 		password: '1234567',
+	},
+	loginUser: {
+		email: 'johndoe@example.com',
+		password: '1234567',
+	},
+	updateUser: {
+		username: 'Hello',
+		email: 'helloworld@example.com',
 	},
 }
 

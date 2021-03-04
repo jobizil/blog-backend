@@ -47,7 +47,7 @@ const logger = new createLogger({
 	],
 	exitOnError: false,
 })
-logger.exceptions.handle(new transports.File({ filename: `exceptions-${newdate}.log`, dirname: 'logs' }))
+// logger.exceptions.handle(new transports.File({ filename: `exceptions-${newdate}.log`, dirname: 'logs' }))
 
 // Handle exceptions
 

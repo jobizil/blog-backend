@@ -1,18 +1,27 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const { database_uri, env } = require('./index')
-const logger = require('../utils/logger')
+const { database_uri } = require("./index");
+const logger = require("../utils/logger");
 
-const connectToDatabase = async () => {
-	const options = {
-		useNewUrlParser: true,
-		useFindAndModify: false,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
+async function connectToDatabase() {
+	try {
+		const options = {
+			useNewUrlParser: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true,
+			useCreateIndex: true,
+		};
+		// Check database env
+
+		let connectionString = await mongoose.connect(database_uri, options);
+		logger.log(
+			"info",
+			`Database connected on ${connectionString.connection.host}.`,
+		);
+	} catch (error) {
+		logger.log("error", `${error.message}`);
+		process.exit(1);
 	}
-	const connectionString = await mongoose.connect(database_uri, options)
-
-	logger.log('info', `Database connected on ${connectionString.connection.host} in ${env} mode.`)
 }
 
-module.exports = connectToDatabase
+module.exports = connectToDatabase;

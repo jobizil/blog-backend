@@ -1,0 +1,14 @@
+[
+    {
+        "_id": "5c8a1d5b0190b214360dc032",
+        "username": "Sasha Ryan",
+        "email": "sasha@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": "5c8a1d5b0190b214360dc038",
+        "username": "Barry Dickens",
+        "email": "barry@gmail.com",
+        "password": "123456"
+    }
+]
