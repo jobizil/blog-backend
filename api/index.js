@@ -1,14 +1,18 @@
-const { Router } = require('express')
-const router = Router()
+const { Router } = require('express');
 
-// NOTE : Handles all routes within this file and then exporst to the default app.js. This helps to keep my file neat and consistent.
+const router = Router();
 
-const userRoute = require('./routes/users.route')
+/*
+ NOTE : Handles all routes within this file and then exporst to the default app.js.
+This helps to keep my file neat and consistent.
+*/
+
+const userRoute = require('./routes/users.route');
 
 router.get('/', (req, res) => {
-	res.json({ status: 'success', message: 'Welcome to my api' })
-})
+  res.json({ status: 'success', message: 'Welcome to my api' });
+});
 
-router.use(userRoute)
+router.use(userRoute);
 
-module.exports = router
+module.exports = router;
