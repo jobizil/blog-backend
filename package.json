@@ -13,7 +13,9 @@
     "start": "nodemon ./bin/www",
     "dev": "nodemon ./bin/www",
     "test:dev": "mocha --timeout 100000 --exclude \"./test/**/!(*.skip).js\" -w --recursive",
-    "test": "mocha --timeout 100000 \"./test/**/!(*.skip).js\" --exit"
+    "test": "mocha --timeout 100000 \"./test/**/!(*.skip).js\" --exit",
+    "seed": "node seeders/seed-up i",
+    "seed:down": "node seeders/seed-down -d"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
