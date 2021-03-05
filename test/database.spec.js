@@ -1,13 +1,20 @@
-'use strict'
-const chai = require('chai')
+"use strict";
+const chai = require("chai");
+const mongoose = require("mongoose");
+const { database_uri_test } = require("../config");
 
-const connectToDatabase = require('../config/database')
+chai.should();
 
-chai.should()
-
-describe('Test Database Connection', () => {
-	let connectionClient = undefined
-	it('Should connect to database', async () => {
-		connectionClient = await connectToDatabase()
-	})
-})
+describe("Database Connection", async () => {
+	it("Should connect to mongodb", async () => {
+		before(async () => {
+			await mongoose.connect(database_uri_test, {
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			});
+		});
+	});
+	after(async () => {
+		await mongoose.disconnect();
+	});
+});

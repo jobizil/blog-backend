@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
-const { database_uri } = require("./index");
+const { database_uri, database_uri_test, env } = require("./index");
 const logger = require("../utils/logger");
 
 async function connectToDatabase() {
+	let connectionString;
 	try {
 		const options = {
 			useNewUrlParser: true,
@@ -12,12 +13,15 @@ async function connectToDatabase() {
 			useCreateIndex: true,
 		};
 		// Check database env
-
-		let connectionString = await mongoose.connect(database_uri, options);
-		logger.log(
-			"info",
-			`Database connected on ${connectionString.connection.host}.`,
-		);
+		switch (env) {
+			case "development":
+				connectionString = await mongoose.connect(database_uri, options);
+				logger.log("info", `Database connected on ${database_uri}.`);
+				break;
+			case "test":
+				connectionString = await mongoose.connect(database_uri_test, options);
+				logger.log("info", `Database connected on ${database_uri_test}.`);
+		}
 	} catch (error) {
 		logger.log("error", `${error.message}`);
 		process.exit(1);
@@ -25,3 +29,5 @@ async function connectToDatabase() {
 }
 
 module.exports = connectToDatabase;
+
+// ${connectionString.connection.host}
