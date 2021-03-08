@@ -1,33 +1,37 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const { database_uri, database_uri_test, env } = require('./index');
-const logger = require('../utils/logger');
+let { database_uri, database_uri_test, env, mongo_options } = require('./index')
+const logger = require('../utils/logger')
 
+// env = 'test'
 async function connectToDatabase() {
-  let connectionString;
+  let connectStr
   try {
-    const options = {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    };
     // Check database env
-    switch (env) {
-      case 'development':
-        connectionString = await mongoose.connect(database_uri, options);
-        logger.log('info', `Database connected on ${database_uri}.`);
-        break;
-      case 'test':
-        connectionString = await mongoose.connect(database_uri_test, options);
-        logger.log('info', `Database connected on ${database_uri_test}.`);
+
+    if (env !== 'test') {
+      connectStr = await mongoose.connect(database_uri, mongo_options)
+      logger.log('info', `Database connected on ${database_uri}.`)
+    } else {
+      connectStr = await mongoose.connect(database_uri_test, mongo_options)
+      logger.log('info', `Database connected on ${database_uri_test}.`)
     }
   } catch (error) {
-    logger.log('error', `${error.message}`);
-    process.exit(1);
+    logger.log('error', `${error.message}`)
+    process.exit(1)
   }
 }
 
-module.exports = connectToDatabase;
+module.exports = connectToDatabase
 
 // ${connectionString.connection.host}
+//  switch (env) {
+//       case 'development':
+//         connectStr = await mongoose.connect(database_uri, mongo_options)
+//         logger.log('info', `Database connected on ${database_uri}.`)
+//         break
+//       case 'test':
+//         connectStr = await mongoose.connect(database_uri_test, mongo_options)
+//         logger.log('info', `Database connected on ${database_uri_test}.`)
+//     }
+//   }
