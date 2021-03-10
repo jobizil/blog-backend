@@ -14,10 +14,10 @@ const app = express();
 app.use(morgan('combined', { stream: logger.stream }));
 app.use(helmet());
 app.use(
-	cors({
-		origin, // url of production app
-		credentials: false, // make true on production
-	}),
+  cors({
+    origin, // url of production app
+    credentials: false, // make true on production
+  }),
 );
 
 app.use(express.json());

@@ -1,34 +1,35 @@
-const mongoose = require('mongoose');
-const { Schema } = require('mongoose');
-
-// const { Schema } = mongoose()
+'use strict'
+const mongoose = require('mongoose')
+const slugify = require('slugify')
+const { Schema } = require('mongoose')
 
 const ArticleSchema = new Schema({
-  title: {
-    type: 'String',
-    required: true,
-  },
-  content: {
-    type: 'String',
-  },
-  imageUrl: {
-    type: 'String',
-  },
+	title: {
+		type: 'String',
+		required: true,
+	},
+	content: {
+		type: 'String',
+	},
+	imageUrl: {
+		type: 'String',
+	},
 
-  email: {
-    type: 'String',
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: 'String',
-    required: true,
-  },
-  userId: {
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-});
+	author: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 
-module.exports = mongoose.model('Article', ArticleSchema);
+	published: { type: Boolean, default: true },
+	publishedAt: { type: Date, default: Date.now() },
+	slug: String,
+})
+
+ArticleSchema.pre('save', function (next) {
+	this.slug = slugify(this.title, {
+		lower: true,
+	})
+	next()
+})
+module.exports = mongoose.model('Article', ArticleSchema)

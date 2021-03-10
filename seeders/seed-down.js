@@ -1,18 +1,18 @@
-const db = require('../config/database')();
-const logger = require('../utils/logger');
-
-const faker = require('faker');
-const User = require('../models/users.model');
+const logger = require('../utils/logger')
+const User = require('../models/users.model')
+const Article = require('../models/articles.model')
+require('../config/database')()
 
 const destoryData = async () => {
   try {
-    await User.deleteMany();
-    logger.log('info', 'Database Purged!');
-    process.exit();
+    await User.deleteMany()
+    await Article.deleteMany()
+    logger.log('info', 'Database Purged!')
+    process.exit()
   } catch (error) {
-    logger.log('info', `${error}`);
-    process.exit(1);
+    logger.log('info', `${error}`)
+    process.exit(1)
   }
-};
+}
 
-if (process.argv[2] === '-d') destoryData();
+if (process.argv[2] === '-d') destoryData()

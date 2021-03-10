@@ -2,6 +2,7 @@ const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 const { registerUserValidation } = require('../../middlewares/userValidation')
+const { userToken } = require('../../middlewares/authToken')
 
 const { checkIfUserExists } = require('../../middlewares/checkUser')
 
@@ -37,7 +38,8 @@ const registerUser = async (req, res) => {
 
     return handlerResponse(req, res, 201, {
       status: 'Success',
-      data: createUser,
+      message:
+        'Account created successfully. Wait for page to redirect your login',
     })
   } catch (error) {
     return handlerResponse(req, res, 400)

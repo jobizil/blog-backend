@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 
-let { database_uri, database_uri_test, env, mongo_options } = require('./index')
+let {
+  database_uri, database_uri_test, env, mongo_options
+} = require('./index')
 const logger = require('../utils/logger')
 
 // env = 'test'

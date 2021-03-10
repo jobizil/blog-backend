@@ -1,15 +1,15 @@
-const { transports, createLogger, format } = require('winston');
+const { transports, createLogger, format } = require('winston')
 
-const { combine, printf } = format;
+const { combine, printf } = format
 
-const logTime = new Date().toLocaleString();
+const logTime = new Date().toLocaleString()
 
 const customLog = printf(
-  ({ level, message }) => `[${level} - level]: ${message} | [LogTime]:${logTime}`,
-);
+  ({ level, message }) => `[${level} - level]: ${message} | [LogTime]:${logTime}`
+)
 
-const date = new Date();
-const newdate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+const date = new Date()
+const newdate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 const options = {
   info: {
     level: 'info',
@@ -35,7 +35,7 @@ const options = {
     handleExceptions: true,
     colorize: true,
   },
-};
+}
 const logger = new createLogger({
   format: combine(customLog),
   transports: [
@@ -46,15 +46,12 @@ const logger = new createLogger({
     new transports.Console(options.console),
   ],
   exitOnError: false,
-});
-// logger.exceptions.handle(new transports.File({ filename: `exceptions-${newdate}.log`, dirname: 'logs' }))
-
-// Handle exceptions
+})
 
 logger.stream = {
   write: (message, _encoding) => {
-    logger.info(message);
+    logger.info(message)
   },
-};
+}
 
-module.exports = logger;
+module.exports = logger

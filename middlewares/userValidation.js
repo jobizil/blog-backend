@@ -1,9 +1,10 @@
 const Joi = require('joi')
 
 // User Register Validation
-const registerUserValidation = payload => {
+const registerUserValidation = (payload) => {
   const userRegisterSchema = Joi.object({
-    username: Joi.string().min(3).required().trim().max(20),
+    username: Joi.string().min(3).required().trim()
+      .max(20),
     email: Joi.string()
       .lowercase()
       .max(100)
@@ -19,7 +20,7 @@ const registerUserValidation = payload => {
 }
 
 // User Login Validation
-const loginUserValidation = payload => {
+const loginUserValidation = (payload) => {
   const userLoginSchema = Joi.object({
     email: Joi.string()
       .lowercase()
@@ -35,7 +36,7 @@ const loginUserValidation = payload => {
   return userLoginSchema.validate(payload)
 }
 // User Login Validation
-const updateUserValidation = payload => {
+const updateUserValidation = (payload) => {
   const updateUser = Joi.object({
     email: Joi.string()
       .lowercase()

@@ -2,17 +2,13 @@ const Article = require('../../models/articles.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
-const createArticle = async (req, res) => {
-	const { title, content, author } = req.body
-
+const getArticles = async (req, res) => {
 	try {
-		const article = await Article.create({
-			title,
-			content,
-			author,
-		})
-
-		return handlerResponse(req, res, 201, {
+		const article = await Article.find().populate('author')
+		if (!article) {
+			return handlerResponse(req, res, 204)
+		}
+		return handlerResponse(req, res, 200, {
 			status: 'Success',
 			data: article,
 		})
@@ -21,4 +17,4 @@ const createArticle = async (req, res) => {
 		return handlerResponse(req, res, 400)
 	}
 }
-module.exports = { createArticle }
+module.exports = { getArticles }
