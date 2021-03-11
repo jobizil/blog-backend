@@ -5,8 +5,13 @@ const User = require('../../models/users.model')
 const { handlerResponse } = require('../../utils/error-handler')
 
 const getProfile = async (req, res) => {
+	const { userId } = req.user
 	try {
-		const user = await User.findById(req.params.id).populate('articles')
+		if (userId !== req.params.id) {
+			return handlerResponse(req, res, 401)
+		}
+
+		const user = await User.findById(userId).populate('articles')
 		if (!user) {
 			return handlerResponse(req, res, 404, null, 'User not found.')
 		}
@@ -17,7 +22,7 @@ const getProfile = async (req, res) => {
 		})
 	} catch (error) {
 		console.log(error)
-		return handlerResponse(req, res, 500)
+		return handlerResponse(req, res, 500, null, { message: error })
 	}
 }
 module.exports = { getProfile }

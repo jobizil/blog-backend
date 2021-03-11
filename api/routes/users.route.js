@@ -1,5 +1,5 @@
 const { Router } = require('express')
-// const authentecateUser = require('../../middlewares/authMiddleware')
+const authentecateUser = require('../../middlewares/authMiddleware')
 
 // ANCHOR Export to index,.js api file
 
@@ -16,8 +16,9 @@ const router = Router()
 
 router.route('/register').post(registerUser)
 router.route('/users').get(getUsers)
-router.route('/users/:id').get(getProfile)
 router.route('/auth/login').post(loginUser)
+router.use(authentecateUser)
+router.route('/user/:id').get(getProfile)
 router.route('/auth/user/:id').put(updateProfile)
 router.route('/auth/user/:id').delete(deleteProfile)
 
