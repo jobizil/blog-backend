@@ -2,6 +2,7 @@ const Article = require('../../models/articles.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
+// FIXME Associate Article to Public
 const getArticles = async (req, res) => {
 	try {
 		const article = await Article.find().populate('author')

@@ -1,11 +1,26 @@
 const Article = require('../../models/articles.model')
+const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
+const { createArticleValidation } = require('../../middlewares/articleValidation')
 const createArticle = async (req, res) => {
 	const { title, content, author } = req.body
+	const { error } = createArticleValidation(req.body)
+	if (error) {
+		return handlerResponse(req, res, 400, null, error.details[0].message)
+	}
 
 	try {
+		if (author !== req.user.userId) {
+			return handlerResponse(req, res, 400, null, 'Invalid Author ID.')
+		}
+		if (!title) {
+			return handlerResponse(req, res, 400, null, 'Title cannot be empty.')
+		}
+		if (!content) {
+			return handlerResponse(req, res, 400, null, 'You cannot publish an empty content.')
+		}
 		const article = await Article.create({
 			title,
 			content,
@@ -18,6 +33,7 @@ const createArticle = async (req, res) => {
 		})
 	} catch (error) {
 		console.log(error)
+		res.send(error)
 		return handlerResponse(req, res, 400)
 	}
 }
