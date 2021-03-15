@@ -4,22 +4,38 @@ const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
-// return handlerResponse(req, res, 200, { status: 'Success', data: user })
+const { updateUserValidation } = require('../../middlewares/userValidation')
 
 const updateProfile = async (req, res) => {
-	try {
-		const { username, email } = req.body
+  let updateUser
+  let { username, email } = req.body
+  try {
+    const { error } = updateUserValidation(req.body)
+    if (error) {
+      return handlerResponse(req, res, 400, null, error.details[0].message)
+    }
 
-		const user = await User.findByIdAndUpdate(req.params.id, { username, email }, { new: true, runValidators: true })
-		if (!user) {
-			return handlerResponse(req, res, 404, null, 'User not found.')
-		}
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return handlerResponse(req, res, 404, null, 'User not found.')
+    }
 
-		return handlerResponse(req, res, 200, { status: 'Success', data: user })
-		console.log(res.originalUrl)
-	} catch (error) {
-		console.log(error)
-		return handlerResponse(req, res, 500)
-	}
+    username = username || user.username
+    email = email || user.email
+    updateUser = await user.save()
+
+    updateUser = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true,
+    })
+
+    return handlerResponse(req, res, 200, {
+      status: 'Success',
+      data: updateUser,
+    })
+  } catch (error) {
+    console.log(error)
+    return handlerResponse(req, res, 500)
+  }
 }
 module.exports = { updateProfile }

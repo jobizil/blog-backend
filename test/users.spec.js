@@ -1,60 +1,57 @@
-"use strict";
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-process.env.NODE_ENV = "test";
+const chai = require('chai')
+const { expect } = require('chai')
+const chaiHttp = require('chai-http')
+const mongoose = require('mongoose')
 
-const { fakeUser } = require("../data/_user");
+const server = require('../app')
+const User = require('../models/users.model')
+const { database_uri, mongo_options } = require('../config')
+const { registerUserValidation } = require('../middlewares/userValidation')
 
-const server = require("../app");
-const User = require("../models/users.model");
+chai.should()
+chai.use(chaiHttp)
 
-chai.should();
-chai.use(chaiHttp);
+describe('User Route', async () => {
+  before(async () => {
+    await mongoose.connect(database_uri, mongo_options)
+  })
+  beforeEach(async () => {
+    await User.deleteMany()
+  })
 
-describe("Users", () => {
-	describe("POST User login", () => {
-		it("Should not login with empty filed", async () => {
-			const res = await chai.request(server).post("/api/v1/auth/users").send();
-			it("Should fail to log user", () => {
-				res.should.have.status(400);
-				res.body.should.be.a("object");
-				res.text.should.contain("Invalid Credentials");
-			});
-		});
-		it("Login User with valid data", async () => {
-			const loginUser = fakeUser.loginUser;
-			const res = await chai
-				.request(server)
-				.post("/api/v1/auth/users")
-				.send(loginUser);
-			it("Should successfuly log user in", () => {
-				res.should.have.status(200);
-				res.body.should.be.a("object");
-			});
-		});
-	});
-	describe("POST - Register user route", async () => {
-		it("Should return error if request body is empty", () => {
-			chai
-				.request(server)
-				.post("/api/v1/users")
-				.end((err, res) => {
-					res.should.have.status(400);
-					res.body.should.have.a("object");
-					res.text.should.contain("Invalid Request");
-				});
-		});
+  describe('POST - Register user route', () => {
+    it('Should Register new user with valid data', async done => {
+      const user = {
+        username: 'johndoe',
+        email: 'johndoe@example.com',
+        password: '1234567',
+      }
+      // FIXME Fix User Reg Validation
+      // const createUser = await registerUserValidation(user);
 
-		it("Should Register new user with valid data", () => {
-			const createUser = fakeUser.registerUser;
-			chai
-				.request(server)
-				.post("/api/v1/users")
-				.send(createUser)
-				.end((err, res) => {
-					res.should.have.status(201);
-					res.should.have.a("object");
-				});
-		});
-	});
-});
+      await User.insertMany(user)
+      chai
+        .request(server)
+        .post('api/v1/register')
+        .send(user)
+        .end((err, res) => {
+          if (err) {
+            console.log(err)
+          }
+          expect(res.status).to.equal(201)
+          done()
+        })
+    })
+  })
+
+  // describe('POST - Login user route', () => {
+  //   it('Should login user with valid data', async () => {
+  //     const user = {
+  //       email: 'johndoe@example.com',
+  //       password: '1234567',
+  //     }
+  //     await User.findOne({ email: user.email })
+  //     chai.request(server).post('api/v1/auth/login').send(user)
+  //   })
+  // })
+})

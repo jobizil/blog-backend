@@ -5,39 +5,39 @@
 
 const handlerResponse = (req, res, statusCode, data, message) => {
   let isError = false;
-  let status = "Success";
+  let status = 'Success';
   let errMessage = message;
   switch (statusCode) {
     // No Content
     case 204:
-      errMessage = message || "Resource not found. ";
+      errMessage = message || 'Resource not found. ';
       break;
 
-    //Bad Request
+    // Bad Request
     case 400:
       isError = true;
-      status = "Fail";
-      errMessage = message || "Invalid Request ";
+      status = 'Fail';
+      errMessage = message || 'Invalid Request ';
       break;
 
     // Unauthorized
     case 401:
       isError = true;
-      status = "Fail";
-      errMessage = message || "Unauthorized Request ";
+      status = 'Fail';
+      errMessage = message || 'Unauthorized Request ';
       break;
 
     // Forbidden
     case 403:
       isError = true;
-      status = "Fail";
-      errMessage = message || "Access to this recource is denied!";
+      status = 'Fail';
+      errMessage = message || 'Access to this recource is denied!';
       break;
 
     // Not Found
     case 404:
       isError = true;
-      errMessage = message || "Internal server error";
+      errMessage = message || 'Internal server error';
       break;
 
     // Inernal Server Error
@@ -47,13 +47,13 @@ const handlerResponse = (req, res, statusCode, data, message) => {
       break;
 
     default:
-      errMessage = "Internal server error";
+      errMessage = 'Internal server error';
       break;
   }
   const response = data || {};
   if (isError) {
     response.error = true;
-    response.status = "Fail";
+    response.status = 'Fail';
     response.message = errMessage;
   }
   return res.status(statusCode).json(response);
