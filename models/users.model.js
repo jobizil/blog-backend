@@ -31,7 +31,6 @@ const UserSchema = new Schema(
 		},
 		ip_address: 'String',
 		last_login: { type: Date, default: Date.now() },
-		token: String,
 		resetToken: String,
 		resetExpire: Date,
 	},
@@ -41,7 +40,7 @@ const UserSchema = new Schema(
 		toJSON: { virtuals: true },
 	},
 )
-
+// Virtual populate articles
 UserSchema.virtual('articles', {
 	ref: 'Article',
 	localField: '_id',
