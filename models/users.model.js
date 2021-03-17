@@ -37,7 +37,7 @@ const UserSchema = new Schema(
 		last_login: { type: Date, default: Date.now() },
 		token: String,
 		resetToken: String,
-		resetExpire: Date,
+		resetExpire: Number,
 	},
 	{
 		timestamps: true,
@@ -71,7 +71,7 @@ UserSchema.methods.validatePassword = async function (password) {
 UserSchema.methods.generateResetToken = function () {
 	const resetToken = crypto.randomBytes(20).toString('hex')
 	this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
-	this.resetExpire = Date.now() + 10 * 60 * 1000
+	this.resetExpire = Date.now() + 10 * 60 * 1000 //Expires in 10 mins
 	return resetToken
 }
 

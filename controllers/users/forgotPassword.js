@@ -13,26 +13,24 @@ const forgotPassword = async (req, res) => {
 	try {
 		let user
 		user = await User.findOne({ email })
-
+		console.log(user)
 		if (!user) {
 			return handlerResponse(req, res, 404, null, 'Reset token has been sent to your email if registered.')
 		}
 
 		// Generate reset token
 		const resetToken = user.generateResetToken()
+		console.log(resetToken)
 		await user.save({ validateBeforeSave: false })
+		console.log(user.resetToken)
+		const resetUrl = `http://${req.headers.host}/auth/reset/${resetToken}`
 
-		const resetUrl = `http://${req.headers.host}/auth/reset/${user.resetToken}`
-		// const resetUrl = `http://${req.headers.host}/auth/reset?token=${user.resetToken}` User token as query params
-
-		console.log(resetUrl)
 		await sendMail(
 			user_mail,
 			email,
 			'Password Reset Request',
 			`  <div> Hi, ${user.username}, <br /><div>
             <div> You are receiving this email because you (or someone else) has requested for a password reset.<br /> Click the link below to reset your password or simply ignore it if you think this is a mistake. </div>
-            ${user.resetExpire}
             
             <br /><div>${resetUrl}</div>`,
 		)
@@ -52,3 +50,4 @@ const forgotPassword = async (req, res) => {
 	}
 }
 module.exports = { forgotPassword }
+// const resetUrl = `http://${req.headers.host}/auth/reset?token=${user.resetToken}` User token as query params
