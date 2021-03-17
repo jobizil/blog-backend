@@ -1,6 +1,10 @@
+'use strict'
+
 const mongoose = require('mongoose')
 
 const bcrypt = require('bcryptjs')
+
+const crypto = require('crypto')
 
 const { Schema } = mongoose
 
@@ -33,7 +37,7 @@ const UserSchema = new Schema(
 		last_login: { type: Date, default: Date.now() },
 		token: String,
 		resetToken: String,
-		resetExpire: Number,
+		resetExpire: Date,
 	},
 	{
 		timestamps: true,
@@ -61,6 +65,14 @@ UserSchema.pre('save', async function (next) {
 // Compare Saved password
 UserSchema.methods.validatePassword = async function (password) {
 	return await bcrypt.compare(password, this.password)
+}
+
+// Generate Password Reset token
+UserSchema.methods.generateResetToken = function () {
+	const resetToken = crypto.randomBytes(20).toString('hex')
+	this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
+	this.resetExpire = Date.now() + 10 * 60 * 1000
+	return resetToken
 }
 
 module.exports = mongoose.model('User', UserSchema)
