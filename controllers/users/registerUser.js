@@ -36,9 +36,11 @@ const registerUser = async (req, res) => {
 			password,
 		})
 
+		const token = userToken(createUser, res)
 		return handlerResponse(req, res, 201, {
 			status: 'Success',
 			message: 'Account created successfully. Wait for page to redirect your login',
+			token: token.token,
 		})
 	} catch (error) {
 		return handlerResponse(req, res, 400)

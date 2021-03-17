@@ -5,7 +5,7 @@ const {
 	mailAuth: { user_mail, user_pass },
 } = require('../config')
 
-const sendEmail = async (source, receiver, subject, content) => {
+const sendEmail = async ({ source, receiver, subject, content }) => {
 	const transporter = nodemailer.createTransport({
 		service: 'Gmail',
 		auth: {

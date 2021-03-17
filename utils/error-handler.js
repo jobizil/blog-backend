@@ -39,6 +39,11 @@ const handlerResponse = (req, res, statusCode, data, message) => {
 			isError = true
 			errMessage = message || 'Resource not found'
 			break
+		// Conflict
+		case 409:
+			isError = true
+			errMessage = message || 'Conflict with current resource.'
+			break
 
 		// Inernal Server Error
 		case 500:

@@ -69,10 +69,12 @@ UserSchema.methods.validatePassword = async function (password) {
 
 // Generate Password Reset token
 UserSchema.methods.generateResetToken = function () {
-	const resetToken = crypto.randomBytes(20).toString('hex')
-	this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
+	// Generate Reset Token
+	const resetPasswordToken = crypto.randomBytes(20).toString('hex')
+	this.resetToken = crypto.createHash('sha256').update(resetPasswordToken).digest('hex')
+	// Set expiry time
 	this.resetExpire = Date.now() + 10 * 60 * 1000 //Expires in 10 mins
-	return resetToken
+	return resetPasswordToken
 }
 
 module.exports = mongoose.model('User', UserSchema)

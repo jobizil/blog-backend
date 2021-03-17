@@ -3,6 +3,7 @@ const { loginUser } = require('./loginUser')
 const { getUsers } = require('./getUsers')
 const { getProfile } = require('./getUserProfile')
 const { updateProfile } = require('./updateUserProfile')
+const { updatePassword } = require('./updatePassword')
 const { deleteProfile } = require('./deleteUserProfile')
 const { forgotPassword } = require('./forgotPassword')
 const { resetPassword } = require('./resetPassword')
@@ -16,4 +17,5 @@ module.exports = {
 	deleteProfile,
 	forgotPassword,
 	resetPassword,
+	updatePassword,
 }

@@ -12,6 +12,7 @@ const {
 	deleteProfile,
 	forgotPassword,
 	resetPassword,
+	updatePassword,
 } = require('../../controllers/users')
 
 const router = Router()
@@ -24,6 +25,7 @@ router.route('/auth/reset/:resetToken').put(resetPassword)
 router.use(authentecateUser)
 router.route('/user/:id').get(getProfile)
 router.route('/auth/user/:id').put(updateProfile)
+router.route('/auth/user/update-password/:id').put(updatePassword)
 router.route('/auth/user/:id').delete(deleteProfile)
 
 module.exports = router

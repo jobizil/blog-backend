@@ -13,27 +13,26 @@ const forgotPassword = async (req, res) => {
 	try {
 		let user
 		user = await User.findOne({ email })
-		console.log(user)
 		if (!user) {
 			return handlerResponse(req, res, 404, null, 'Reset token has been sent to your email if registered.')
 		}
 
 		// Generate reset token
-		const resetToken = user.generateResetToken()
-		console.log(resetToken)
-		await user.save({ validateBeforeSave: false })
-		console.log(user.resetToken)
-		const resetUrl = `http://${req.headers.host}/auth/reset/${resetToken}`
+		const resetPasswordToken = user.generateResetToken()
+		console.log('Hello', resetPasswordToken)
 
-		await sendMail(
-			user_mail,
-			email,
-			'Password Reset Request',
-			`  <div> Hi, ${user.username}, <br /><div>
+		await user.save({ validateBeforeSave: false })
+		const resetUrl = `${req.protocol}://${req.headers.host}/auth/reset/${resetPasswordToken}`
+		console.log(resetUrl)
+		await sendMail({
+			source: user_mail,
+			receiver: email,
+			subject: 'Password Reset Request',
+			content: `  <div> Hi, ${user.username}, <br /><div>
             <div> You are receiving this email because you (or someone else) has requested for a password reset.<br /> Click the link below to reset your password or simply ignore it if you think this is a mistake. </div>
             
             <br /><div>${resetUrl}</div>`,
-		)
+		})
 
 		return handlerResponse(req, res, 200, {
 			status: 'Success',
@@ -45,8 +44,8 @@ const forgotPassword = async (req, res) => {
 		await user.save({
 			validateBeforeSave: false,
 		})
-
-		return handlerResponse(req, res, 500)
+		console.log(error)
+		return handlerResponse(req, res, 500, 'Reset email could not be sent.')
 	}
 }
 module.exports = { forgotPassword }
