@@ -33,7 +33,7 @@ const UserSchema = new Schema(
 		last_login: { type: Date, default: Date.now() },
 		token: String,
 		resetToken: String,
-		resetExpire: Date,
+		resetExpire: Number,
 	},
 	{
 		timestamps: true,

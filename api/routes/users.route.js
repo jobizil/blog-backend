@@ -10,6 +10,7 @@ const {
 	getProfile,
 	updateProfile,
 	deleteProfile,
+	forgotPassword,
 } = require('../../controllers/users')
 
 const router = Router()
@@ -17,6 +18,7 @@ const router = Router()
 router.route('/register').post(registerUser)
 router.route('/users').get(getUsers)
 router.route('/auth/login').post(loginUser)
+router.route('/auth/reset-password').post(forgotPassword)
 router.use(authentecateUser)
 router.route('/user/:id').get(getProfile)
 router.route('/auth/user/:id').put(updateProfile)

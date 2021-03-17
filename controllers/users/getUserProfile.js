@@ -7,8 +7,9 @@ const { handlerResponse } = require('../../utils/error-handler')
 const getProfile = async (req, res) => {
 	const { userId } = req.user
 	try {
+		// Validate user id
 		if (userId !== req.params.id) {
-			return handlerResponse(req, res, 401)
+			return handlerResponse(req, res, 400)
 		}
 
 		const user = await User.findById(userId).populate('articles')
@@ -21,8 +22,7 @@ const getProfile = async (req, res) => {
 			data: user,
 		})
 	} catch (error) {
-		console.log(error)
-		return handlerResponse(req, res, 500, null, { message: error })
+		return handlerResponse(req, res, 500)
 	}
 }
 module.exports = { getProfile }
