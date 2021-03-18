@@ -1,10 +1,10 @@
 const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
-const { registerUserValidation } = require('../../middlewares/userValidation')
+const { registerUserValidation } = require('../../middlewares/requestValidators/userValidation')
 const { userToken } = require('../../middlewares/authToken')
 
-const { checkIfUserExists } = require('../../middlewares/checkUser')
+const { checkIfUserExists } = require('../../helpers/checkUserHelper')
 
 const registerUser = async (req, res) => {
 	const { username, email, password } = req.body

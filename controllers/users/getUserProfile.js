@@ -12,7 +12,7 @@ const getProfile = async (req, res) => {
 			return handlerResponse(req, res, 400)
 		}
 
-		const user = await User.findById(userId).populate('articles')
+		const user = await User.findById(userId).populate('articles comments')
 		if (!user) {
 			return handlerResponse(req, res, 404, null, 'User not found.')
 		}

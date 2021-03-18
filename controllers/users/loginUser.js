@@ -1,7 +1,7 @@
 const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
-const { loginUserValidation } = require('../../middlewares/userValidation')
+const { loginUserValidation } = require('../../middlewares/requestValidators/userValidation')
 const { userToken } = require('../../middlewares/authToken')
 
 const loginUser = async (req, res) => {

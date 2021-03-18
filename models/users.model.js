@@ -51,6 +51,11 @@ UserSchema.virtual('articles', {
 	localField: '_id',
 	foreignField: 'author',
 })
+UserSchema.virtual('comments', {
+	ref: 'Comment',
+	localField: '_id',
+	foreignField: 'authorId',
+})
 
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function (next) {

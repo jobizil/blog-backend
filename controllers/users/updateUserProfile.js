@@ -4,7 +4,7 @@ const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
-const { updateUserValidation } = require('../../middlewares/userValidation')
+const { updateUserValidation } = require('../../middlewares/requestValidators/userValidation')
 
 const updateProfile = async (req, res) => {
 	let updateUser
