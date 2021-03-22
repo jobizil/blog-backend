@@ -11,6 +11,7 @@ const getUsers = async (req, res) => {
 		}
 		return handlerResponse(req, res, 200, {
 			status: 'Success',
+			'Total Users': user.length,
 			data: user,
 		})
 	} catch (error) {

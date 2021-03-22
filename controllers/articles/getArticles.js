@@ -11,6 +11,7 @@ const getArticles = async (req, res) => {
 		}
 		return handlerResponse(req, res, 200, {
 			status: 'Success',
+			'Total Articles': article.length,
 			data: article,
 		})
 	} catch (error) {

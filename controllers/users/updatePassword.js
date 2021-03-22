@@ -21,9 +21,8 @@ const updatePassword = async (req, res) => {
 		// }
 
 		password = user.password
-		await user.save()
 
-		const updateUser = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+		await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
 			new: true,
 			runValidators: true,
 		})

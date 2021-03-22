@@ -16,7 +16,6 @@ const createComment = async (req, res) => {
 			return handlerResponse(req, res, 400, null, 'Article not found')
 		}
 		const author = await User.findOne({ _id: authorId }).select('username email profilePhoto')
-		console.log(author)
 
 		if (!author) {
 			return handlerResponse(req, res, 400, null, 'Invalid Author ID')
@@ -28,8 +27,6 @@ const createComment = async (req, res) => {
 			comment,
 		})
 	} catch (error) {
-		console.log(error)
-
 		return handlerResponse(req, res, 400)
 	}
 }

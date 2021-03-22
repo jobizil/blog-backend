@@ -25,11 +25,11 @@ const updateProfile = async (req, res) => {
 			return handlerResponse(req, res, 200, { message: 'No changes made to profile' })
 		}
 
+		// Fill existing data in form
 		username = username || user.username
 		email = email || user.email
-		updateUser = await user.save()
 
-		updateUser = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+		await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
 			new: true,
 			runValidators: true,
 		})
@@ -37,7 +37,6 @@ const updateProfile = async (req, res) => {
 		return handlerResponse(req, res, 200, {
 			status: 'Success',
 			message: 'Your profile has been updated successfully',
-			// data: updateUser,
 		})
 	} catch (error) {
 		console.log(error)

@@ -50,11 +50,13 @@ UserSchema.virtual('articles', {
 	ref: 'Article',
 	localField: '_id',
 	foreignField: 'author',
+	justOne: false,
 })
 UserSchema.virtual('comments', {
 	ref: 'Comment',
 	localField: '_id',
 	foreignField: 'authorId',
+	justOne: false,
 })
 
 // Encrypt password using bcrypt
@@ -64,6 +66,13 @@ UserSchema.pre('save', async function (next) {
 	}
 	const genSalt = await bcrypt.genSalt(10)
 	this.password = await bcrypt.hash(this.password, genSalt)
+	next()
+})
+
+// Remove related articles
+UserSchema.pre('remove', async function (next) {
+	await this.model('Article').deleteMany({ author: this._id })
+	await this.model('Comment').deleteMany({ authorId: this._id })
 	next()
 })
 
