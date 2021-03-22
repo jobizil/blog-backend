@@ -12,7 +12,7 @@ const articleRoute = require('./routes/articles.route')
 const commentRoute = require('./routes/comments.route')
 
 router.get('/', (req, res) => {
-	res.json({ status: 'success', message: 'Welcome to my api' })
+  res.json({ status: 'success', message: 'Welcome to my api' })
 })
 
 router.use(userRoute)

@@ -4,15 +4,15 @@ const authentecateUser = require('../../middlewares/authMiddleware')
 // ANCHOR Export to index,.js api file
 
 const {
-	registerUser,
-	loginUser,
-	getUsers,
-	getProfile,
-	updateProfile,
-	deleteProfile,
-	forgotPassword,
-	resetPassword,
-	updatePassword,
+  registerUser,
+  loginUser,
+  getUsers,
+  getProfile,
+  updateProfile,
+  deleteProfile,
+  forgotPassword,
+  resetPassword,
+  updatePassword,
 } = require('../../controllers/users')
 
 const router = Router()

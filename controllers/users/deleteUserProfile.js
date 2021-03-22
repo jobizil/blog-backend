@@ -1,7 +1,5 @@
 const User = require('../../models/users.model')
 
-// TODO: Use validated user to update user profile
-
 const { handlerResponse } = require('../../utils/error-handler')
 
 const deleteProfile = async (req, res) => {
@@ -14,10 +12,9 @@ const deleteProfile = async (req, res) => {
 
 		return handlerResponse(req, res, 200, {
 			status: 'Success',
-			message: 'Your profile has beem deleted.',
+			message: 'Your profile has been deleted.',
 		})
 	} catch (error) {
-		console.log(error)
 		return handlerResponse(req, res, 500)
 	}
 }

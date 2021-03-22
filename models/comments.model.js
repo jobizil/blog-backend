@@ -13,6 +13,14 @@ const CommentSchema = new Schema({
 		ref: 'User',
 		required: true,
 	},
+	publishedAt: { type: Date, default: Date.now() },
 })
+
+CommentSchema.methods.toJSON = function () {
+	obj = this.toObject()
+	delete obj.publishedAt
+	delete obj.__v
+	return obj
+}
 
 module.exports = mongoose.model('Comment', CommentSchema)

@@ -9,13 +9,13 @@ const { forgotPassword } = require('./forgotPassword')
 const { resetPassword } = require('./resetPassword')
 
 module.exports = {
-	registerUser,
-	loginUser,
-	getUsers,
-	getProfile,
-	updateProfile,
-	deleteProfile,
-	forgotPassword,
-	resetPassword,
-	updatePassword,
+  registerUser,
+  loginUser,
+  getUsers,
+  getProfile,
+  updateProfile,
+  deleteProfile,
+  forgotPassword,
+  resetPassword,
+  updatePassword,
 }

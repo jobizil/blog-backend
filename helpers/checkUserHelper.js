@@ -5,9 +5,9 @@ const User = require('../models/users.model')
  */
 
 async function checkIfUserExists(username, email) {
-	const checkUsername = await User.findOne({ username })
-	const checkEmail = await User.findOne({ email })
-	return { checkUsername, checkEmail }
+  const checkUsername = await User.findOne({ username })
+  const checkEmail = await User.findOne({ email })
+  return { checkUsername, checkEmail }
 }
 
 module.exports = { checkIfUserExists }

@@ -1,5 +1,3 @@
-'use strict'
-
 const mongoose = require('mongoose')
 
 const bcrypt = require('bcryptjs')
@@ -68,8 +66,20 @@ UserSchema.pre('save', async function (next) {
 	this.password = await bcrypt.hash(this.password, genSalt)
 	next()
 })
+// Remove sensitive data before sending to client
+UserSchema.methods.toJSON = function () {
+	const obj = this.toObject()
+	delete obj.password
+	delete obj.createdAt
+	delete obj.updatedAt
+	delete obj.profilePhotoId
+	delete obj.id
+	delete obj.__v
 
-// Remove related articles
+	return obj
+}
+
+// Cascade Delete realted user articles and comments
 UserSchema.pre('remove', async function (next) {
 	await this.model('Article').deleteMany({ author: this._id })
 	await this.model('Comment').deleteMany({ authorId: this._id })

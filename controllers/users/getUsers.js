@@ -4,7 +4,10 @@ const { handlerResponse } = require('../../utils/error-handler')
 
 const getUsers = async (req, res) => {
 	try {
-		const user = await User.find().populate('articles')
+		const user = await User.find().populate({
+			path: 'articles',
+			select: 'title ',
+		})
 
 		if (!user) {
 			return handlerResponse(req, res, 204)
@@ -15,7 +18,6 @@ const getUsers = async (req, res) => {
 			data: user,
 		})
 	} catch (error) {
-		console.log(error)
 		return handlerResponse(req, res, 400)
 	}
 }

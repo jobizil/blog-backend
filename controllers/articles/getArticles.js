@@ -2,7 +2,8 @@ const Article = require('../../models/articles.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
-// FIXME Associate Article to Public
+// TODO: [] - Implement pagination and data filtering
+// TODO: [] - Implement query functionality
 const getArticles = async (req, res) => {
 	try {
 		const article = await Article.find().populate('author')
@@ -15,7 +16,6 @@ const getArticles = async (req, res) => {
 			data: article,
 		})
 	} catch (error) {
-		console.log(error)
 		return handlerResponse(req, res, 400)
 	}
 }

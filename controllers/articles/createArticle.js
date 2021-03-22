@@ -4,6 +4,7 @@ const User = require('../../models/users.model')
 const { handlerResponse } = require('../../utils/error-handler')
 
 const { createArticleValidation } = require('../../middlewares/requestValidators/articleValidation')
+
 const createArticle = async (req, res) => {
 	const { title, content, author } = req.body
 	const { error } = createArticleValidation(req.body)
@@ -28,7 +29,6 @@ const createArticle = async (req, res) => {
 			data: article,
 		})
 	} catch (error) {
-		console.log(error)
 		res.send(error)
 		return handlerResponse(req, res, 400)
 	}

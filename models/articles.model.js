@@ -1,9 +1,8 @@
-'use strict'
-const { CLIEngine } = require('eslint')
 const mongoose = require('mongoose')
 const { Schema } = require('mongoose')
 // const slugify = require('slugify')
 const slug = require('mongoose-slug-updater')
+
 mongoose.plugin(slug)
 
 const ArticleSchema = new Schema(
@@ -48,9 +47,18 @@ ArticleSchema.virtual('comments', {
 	justOne: false,
 })
 
+// Cascade Delete realted comments in article
 ArticleSchema.pre('remove', async function (next) {
 	await this.model('Comment').deleteMany({ articleId: this._id })
 	next()
 })
+
+// Remove not needed data
+ArticleSchema.methods.toJSON = function () {
+	const obj = this.toObject()
+	delete obj.__v
+	delete obj.id
+	return obj
+}
 
 module.exports = mongoose.model('Article', ArticleSchema)

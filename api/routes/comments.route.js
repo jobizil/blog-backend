@@ -1,8 +1,9 @@
-'use strict'
 const { Router } = require('express')
 const authentecateUser = require('../../middlewares/authMiddleware')
 
-const { createComment, getComments, modifyComment, removeComment } = require('../../controllers/comments')
+const {
+  createComment, getComments, modifyComment, removeComment
+} = require('../../controllers/comments')
 
 const router = Router()
 

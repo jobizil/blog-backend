@@ -1,12 +1,10 @@
-'use strict'
-
 const { Router } = require('express')
 const {
-	createArticle,
-	getArticles,
-	getSingleArticle,
-	modifyArticle,
-	removeArticle,
+  createArticle,
+  getArticles,
+  getSingleArticle,
+  modifyArticle,
+  removeArticle,
 } = require('../../controllers/articles')
 
 const router = Router()
