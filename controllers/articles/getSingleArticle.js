@@ -4,23 +4,15 @@ const Article = require('../../models/articles.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
-/*
- * *  @route GET /article/:articleId
- */
 const getSingleArticle = async (req, res) => {
 	const { userId } = req.user
 
-	// FIXME Associate Single Article to User
 	try {
 		if (!userId) {
 			return handlerResponse(req, res, 401)
 		}
-		console.log(req.user)
 
-		const article = await Article.findById(req.params.id).populate({
-			path: 'author',
-			select: 'username, email profilePhoto',
-		})
+		const article = await Article.findById(req.params.id).populate('comments')
 		if (!article) {
 			return handlerResponse(req, res, 404, null, 'article not found.')
 		}
@@ -30,8 +22,7 @@ const getSingleArticle = async (req, res) => {
 			data: article,
 		})
 	} catch (error) {
-		console.log(error)
-		return handlerResponse(req, res, 400)
+		return handlerResponse(req, res, 500, null, { message: error })
 	}
 }
 module.exports = { getSingleArticle }

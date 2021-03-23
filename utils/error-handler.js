@@ -4,59 +4,64 @@
  */
 
 const handlerResponse = (req, res, statusCode, data, message) => {
-  let isError = false;
-  let status = 'Success';
-  let errMessage = message;
+  let isError = false
+  let status = 'Success'
+  let errMessage = message
   switch (statusCode) {
     // No Content
     case 204:
-      errMessage = message || 'Resource not found. ';
-      break;
+      errMessage = message || 'Resource not found. '
+      break
 
-    // Bad Request
+      // Bad Request
     case 400:
-      isError = true;
-      status = 'Fail';
-      errMessage = message || 'Invalid Request ';
-      break;
+      isError = true
+      status = 'Fail'
+      errMessage = message || 'Invalid Request '
+      break
 
-    // Unauthorized
+      // Unauthorized
     case 401:
-      isError = true;
-      status = 'Fail';
-      errMessage = message || 'Unauthorized Request ';
-      break;
+      isError = true
+      status = 'Fail'
+      errMessage = message || 'Unauthorized Request '
+      break
 
-    // Forbidden
+      // Forbidden
     case 403:
-      isError = true;
-      status = 'Fail';
-      errMessage = message || 'Access to this recource is denied!';
-      break;
+      isError = true
+      status = 'Fail'
+      errMessage = message || 'Access to this recource is denied!'
+      break
 
-    // Not Found
+      // Not Found
     case 404:
-      isError = true;
-      errMessage = message || 'Internal server error';
-      break;
+      isError = true
+      errMessage = message || 'Resource not found'
+      break
+      // Conflict
+    case 409:
+      isError = true
+      errMessage = message || 'Conflict with current resource.'
+      break
 
-    // Inernal Server Error
+      // Inernal Server Error
     case 500:
-      isError = true;
-      errMessage = message;
-      break;
+      isError = true
+      errMessage = message
+      break
 
     default:
-      errMessage = 'Internal server error';
-      break;
+      errMessage = 'Internal server error'
+      break
   }
-  const response = data || {};
+  const response = data || {}
   if (isError) {
-    response.error = true;
-    response.status = 'Fail';
-    response.message = errMessage;
+    response.error = true
+    response.status = 'Fail'
+    response.message = errMessage
   }
-  return res.status(statusCode).json(response);
-};
+  return res.status(statusCode).json(response)
+}
 
-module.exports = { handlerResponse };
+module.exports = { handlerResponse }

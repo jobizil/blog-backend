@@ -3,7 +3,8 @@ const User = require('../../models/users.model')
 
 const { handlerResponse } = require('../../utils/error-handler')
 
-const { createArticleValidation } = require('../../middlewares/articleValidation')
+const { createArticleValidation } = require('../../middlewares/requestValidators/articleValidation')
+
 const createArticle = async (req, res) => {
 	const { title, content, author } = req.body
 	const { error } = createArticleValidation(req.body)
@@ -21,18 +22,13 @@ const createArticle = async (req, res) => {
 		if (!content) {
 			return handlerResponse(req, res, 400, null, 'You cannot publish an empty content.')
 		}
-		const article = await Article.create({
-			title,
-			content,
-			author,
-		})
+		const article = await Article.create({ ...req.body })
 
 		return handlerResponse(req, res, 201, {
 			status: 'Success',
 			data: article,
 		})
 	} catch (error) {
-		console.log(error)
 		res.send(error)
 		return handlerResponse(req, res, 400)
 	}

@@ -1,25 +1,21 @@
-const Article = require('../../models/articles.model')
+const Comment = require('../../models/comments.model')
 const { handlerResponse } = require('../../utils/error-handler')
 // NOTE: []- Check for user ID
 // NOTE: []- Check for article ID
 
-const removeArticle = async (req, res) => {
+const removeComment = async (req, res) => {
   const { id } = req.params
 
   try {
-    article = await Article.findById(id)
-    if (!article) {
-      return handlerResponse(req, res, 404)
-    }
-    article.remove()
+    query = await Comment.findByIdAndDelete(id)
 
     return handlerResponse(req, res, 200, {
       status: 'success',
-      message: 'Article removed successfully.',
+      message: 'Comment removed successfully.',
     })
   } catch (error) {
     console.log(error)
     return handlerResponse(req, res, 400)
   }
 }
-module.exports = { removeArticle }
+module.exports = { removeComment }

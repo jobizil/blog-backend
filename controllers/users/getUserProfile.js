@@ -5,24 +5,24 @@ const User = require('../../models/users.model')
 const { handlerResponse } = require('../../utils/error-handler')
 
 const getProfile = async (req, res) => {
-	const { userId } = req.user
-	try {
-		if (userId !== req.params.id) {
-			return handlerResponse(req, res, 401)
-		}
+  const { userId } = req.user
+  try {
+    // Validate user id
+    if (userId !== req.params.id) {
+      return handlerResponse(req, res, 400)
+    }
 
-		const user = await User.findById(userId).populate('articles')
-		if (!user) {
-			return handlerResponse(req, res, 404, null, 'User not found.')
-		}
+    const user = await User.findById(userId).populate('articles comments')
+    if (!user) {
+      return handlerResponse(req, res, 404, null, 'User not found.')
+    }
 
-		return handlerResponse(req, res, 200, {
-			status: 'Success',
-			data: user,
-		})
-	} catch (error) {
-		console.log(error)
-		return handlerResponse(req, res, 500, null, { message: error })
-	}
+    return handlerResponse(req, res, 200, {
+      status: 'Success',
+      data: user,
+    })
+  } catch (error) {
+    return handlerResponse(req, res, 500)
+  }
 }
 module.exports = { getProfile }

@@ -4,19 +4,20 @@
         "commonjs": true,
         "es2021": true,
         "node": true,
-         "mocha": true
+        "mocha": true
     },
     "extends": [
         "airbnb-base"
     ],
     "parserOptions": {
-        "ecmaVersion": 12
+        "ecmaVersion": 12,
+        "sourceType": "module"
     },
     "rules": {
         "import/no-unresolved": "off",
         "no-var": 0,
         "camelcase": "off",
-        "no-console": "off",
+        "no-console": "warn",
         "vars-on-top": "off",
         "spaced-comment": "off",
         "consistent-return": "off",
@@ -29,8 +30,7 @@
         "no-shadow": "off",
         "prefer-const": "off",
         "new-cap": "off",
-        "impliedStrict": true,
-        "strict":"error",
+        "strict": "error",
         "comma-dangle": "off",
         "lines-around-directive": "off",
         "no-underscore-dangle": "off",
@@ -38,7 +38,11 @@
         "no-use-before-define": "off",
         "no-unused-vars": "off",
         "semi": "off",
-        "arrow-parens":"off",
-        "no-undef": "off"
+        "arrow-parens": "off",
+        "no-undef": "off",
+        "allowIndentationTabs": 0,
+        "no-tabs": "off",
+        "indent": "off",
+        "eqeqeq": "off"
     }
 }

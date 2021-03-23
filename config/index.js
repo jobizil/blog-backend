@@ -14,6 +14,7 @@ module.exports = {
     useUnifiedTopology: true,
     useCreateIndex: true,
   },
+  mailAuth: { user_mail: process.env.MAIL_USER, user_pass: process.env.MAIL_PASS },
   auth: {
     jwt_secret: process.env.JWT_SECRET,
     access_token_life: process.env.ACCESS_TOKEN_LIFE,
