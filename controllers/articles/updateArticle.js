@@ -4,6 +4,8 @@ const User = require('../../models/users.model')
 const { handlerResponse } = require('../../utils/error-handler')
 
 const { createArticleValidation } = require('../../middlewares/articleValidation')
+
+// FIXME: []- Edit Article Validation
 const editArticle = async (req, res) => {
 	let editArticle
 	let { title, content } = req.body
@@ -21,6 +23,7 @@ const editArticle = async (req, res) => {
 		title = title || article.title
 		content = content || article.content
 		editArticle = await article.save()
+		// eslint-disable-next-line max-len
 		editArticle = await Article.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
 
 		return handlerResponse(req, res, 200, {
@@ -28,8 +31,7 @@ const editArticle = async (req, res) => {
 			data: editArticle,
 		})
 	} catch (error) {
-		console.log(error)
-		return handlerResponse(req, res, 500)
+		return handlerResponse(req, res, 400)
 	}
 }
 module.exports = { editArticle }

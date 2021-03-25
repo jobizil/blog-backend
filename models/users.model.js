@@ -4,6 +4,12 @@ const bcrypt = require('bcryptjs')
 
 const crypto = require('crypto')
 
+const jwt = require('jsonwebtoken')
+
+const moment = require('moment')
+
+const { auth } = require('../config')
+
 const { Schema } = mongoose
 
 const UserSchema = new Schema(
@@ -35,6 +41,7 @@ const UserSchema = new Schema(
 		last_login: { type: Date, default: Date.now() },
 		resetToken: String,
 		resetExpire: Number,
+		token: String,
 	},
 	{
 		timestamps: true,
@@ -72,10 +79,29 @@ UserSchema.methods.toJSON = function () {
 	delete obj.createdAt
 	delete obj.updatedAt
 	delete obj.profilePhotoId
+	delete obj.token
 	delete obj.id
 	delete obj.__v
 
 	return obj
+}
+
+// Generate User Token
+
+UserSchema.methods.generateUserToken = async function () {
+	const payload = { _id: this._id.toString(), username: this.username }
+
+	// generate access token and expiry date
+	const token = jwt.sign(payload, auth.jwt_secret, {
+		expiresIn: auth.access_token_life,
+	})
+
+	// Expiry time of access token
+	expireAt = moment().add(auth.access_token_life).valueOf()
+
+	this.token = token
+	await this.save()
+	return { token, expireAt }
 }
 
 // Cascade Delete realted user articles and comments

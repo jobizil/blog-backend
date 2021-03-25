@@ -4,6 +4,8 @@ const { handlerResponse } = require('../../utils/error-handler')
 
 // TODO: [] - Implement pagination and data filtering
 // TODO: [] - Implement query functionality
+// TODO: [] - Implement redis caching
+
 const getArticles = async (req, res) => {
 	try {
 		const article = await Article.find().populate('author')

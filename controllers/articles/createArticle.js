@@ -13,7 +13,7 @@ const createArticle = async (req, res) => {
 	}
 
 	try {
-		if (author !== req.user.userId) {
+		if (author != req.user._id) {
 			return handlerResponse(req, res, 400, null, 'Invalid Author ID.')
 		}
 		if (!title) {

@@ -7,7 +7,6 @@ const { handlerResponse } = require('../../utils/error-handler')
 const { updateUserValidation } = require('../../middlewares/requestValidators/userValidation')
 
 const updateProfile = async (req, res) => {
-	let updateUser
 	let { username, email } = req.body
 	try {
 		const { error } = updateUserValidation(req.body)
@@ -39,7 +38,6 @@ const updateProfile = async (req, res) => {
 			message: 'Your profile has been updated successfully',
 		})
 	} catch (error) {
-		console.log(error)
 		return handlerResponse(req, res, 500)
 	}
 }

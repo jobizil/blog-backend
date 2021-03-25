@@ -4,15 +4,16 @@ const authentecateUser = require('../../middlewares/authMiddleware')
 // ANCHOR Export to index,.js api file
 
 const {
-  registerUser,
-  loginUser,
-  getUsers,
-  getProfile,
-  updateProfile,
-  deleteProfile,
-  forgotPassword,
-  resetPassword,
-  updatePassword,
+	registerUser,
+	loginUser,
+	getUsers,
+	getProfile,
+	updateProfile,
+	deleteProfile,
+	forgotPassword,
+	resetPassword,
+	updatePassword,
+	logoutUser,
 } = require('../../controllers/users')
 
 const router = Router()
@@ -27,5 +28,6 @@ router.route('/user/:id').get(getProfile)
 router.route('/auth/user/:id').put(updateProfile)
 router.route('/auth/user/update-password/:id').put(updatePassword)
 router.route('/auth/user/:id').delete(deleteProfile)
+router.route('/auth/logout').post(logoutUser)
 
 module.exports = router

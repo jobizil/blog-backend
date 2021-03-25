@@ -8,7 +8,7 @@ const modifyArticle = async (req, res) => {
 	try {
 		const article = await Article.findById(id)
 		if (!article) {
-			return handlerResponse(req, res, 204)
+			return handlerResponse(req, res, 404, null, 'Article not found.')
 		}
 		content = content || article.content
 		title = title || article.title
@@ -21,7 +21,7 @@ const modifyArticle = async (req, res) => {
 
 		return handlerResponse(req, res, 200, {
 			status: 'Success',
-			message: 'Articles modified',
+			message: 'Article modified',
 			data: updatedArticle,
 		})
 	} catch (error) {

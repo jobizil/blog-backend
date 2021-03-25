@@ -5,10 +5,10 @@ const Article = require('../../models/articles.model')
 const { handlerResponse } = require('../../utils/error-handler')
 
 const getSingleArticle = async (req, res) => {
-	const { userId } = req.user
+	const { _id } = req.user
 
 	try {
-		if (!userId) {
+		if (!_id) {
 			return handlerResponse(req, res, 401)
 		}
 
